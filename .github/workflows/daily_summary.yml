@@ -1,0 +1,40 @@
+name: Daily Research Digest
+
+on:
+  schedule:
+    # Run every day at 09:00 UTC (after arXiv and HuggingFace publish their daily submissions)
+    - cron: "0 9 * * *"
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: write  # Needed to commit the generated summary back to the repo
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch papers and generate summary
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python scripts/fetch_and_summarize.py
+
+      - name: Commit and push summary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          DATE=$(date -u +%Y-%m-%d)
+          git add summaries/${DATE}.md
+          git diff --cached --quiet && echo "No new summary to commit." || \
+            git commit -m "Daily digest: ${DATE}" && git push

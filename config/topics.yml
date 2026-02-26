@@ -1,0 +1,36 @@
+# Topics that Linwei is interested in
+# These are used to filter arxiv papers and HuggingFace submissions
+
+arxiv:
+  # arXiv subject categories to monitor
+  categories:
+    - cs.AI    # Artificial Intelligence
+    - cs.LG    # Machine Learning
+    - cs.CV    # Computer Vision and Pattern Recognition
+    - cs.CL    # Computation and Language (NLP)
+    - cs.RO    # Robotics
+  # Additional keywords to filter by title/abstract (case-insensitive)
+  keywords:
+    - large language model
+    - LLM
+    - diffusion model
+    - reinforcement learning
+    - autonomous agent
+    - multimodal
+    - foundation model
+    - vision-language
+    - transformer
+    - generative model
+
+huggingface:
+  # Keywords to search in HuggingFace daily papers
+  keywords:
+    - large language model
+    - LLM
+    - diffusion
+    - multimodal
+    - vision language
+    - agent
+    - reinforcement learning
+    - generative
+    - foundation model
